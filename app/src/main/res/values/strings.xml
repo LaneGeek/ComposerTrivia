@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Composer Trivia</string>
+    <string name="title_activity_trivia">Trivia Activity</string>
+</resources>
