@@ -1,5 +1,6 @@
 package sekhah.lane.composertrivia
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -41,15 +42,22 @@ class MainActivity : AppCompatActivity() {
 
         // Reset all history
         deleteHistoryButton.setOnClickListener {
-            correctTotal = 0
-            incorrectTotal = 0
-            history = arrayListOf()
-            val editor = sharedPrefs?.edit()
-            editor?.putInt("CorrectTotal", correctTotal)
-            editor?.putInt("IncorrectTotal", incorrectTotal)
-            editor?.putStringSet("History", history.toMutableSet())
-            editor?.apply()
-            updateScorecard()
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Delete History")
+            builder.setMessage("Are you sure you want to do this?")
+            builder.setPositiveButton("Yes") { _, _ ->
+                correctTotal = 0
+                incorrectTotal = 0
+                history = arrayListOf()
+                val editor = sharedPrefs?.edit()
+                editor?.putInt("CorrectTotal", correctTotal)
+                editor?.putInt("IncorrectTotal", incorrectTotal)
+                editor?.putStringSet("History", history.toMutableSet())
+                editor?.apply()
+                updateScorecard()
+            }
+            builder.setNegativeButton("No") { _, _ -> }
+            builder.create().show()
         }
     }
 
