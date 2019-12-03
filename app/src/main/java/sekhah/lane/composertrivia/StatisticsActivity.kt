@@ -11,7 +11,7 @@ class StatisticsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
 
-        // Extract the data from MainActivity and reverse it so most recent at top
+        // Extract the data from MainActivity and reverse it so most recent is at top
         val history = intent.getStringArrayListExtra("History")?.reversed()
 
         // Render the list view

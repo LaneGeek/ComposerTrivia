@@ -35,21 +35,25 @@ class MainActivity : AppCompatActivity() {
         val question = data?.getStringExtra("Question") ?: ""
         val correctAnswer = data?.getIntExtra("CorrectAnswer", 0)
         val userAnswer = data?.getIntExtra("UserAnswer", 0)
-        val questionTime = data?.getStringExtra("QuestionTime") ?: ""
+        val questionTime = data?.getStringExtra("TimeDate") ?: ""
         val correct = correctAnswer == userAnswer
 
-        // Update the scorecard
-        if (correct)
-            correctTotal++
-        else
-            incorrectTotal++
-        totalQuestionsTextView.text = (correctTotal + incorrectTotal).toString()
-        correctTextView.text = correctTotal.toString()
-        incorrectTextView.text = incorrectTotal.toString()
-        percentageTextView.text = (correctTotal / (correctTotal + incorrectTotal).toFloat() * 100).toInt().toString()
+        // Check to see the question was asked and so the back button was not pressed
+        if (question != "") {
 
-        // Log entry to history
-        val entry = "Time & Date: $questionTime\nQuestion: $question\nYour answer of $userAnswer was ${if (correct) "correct." else "incorrect."}"
-        history.add(entry)
+            // Update the scorecard
+            if (correct)
+                correctTotal++
+            else
+                incorrectTotal++
+            totalQuestionsTextView.text = (correctTotal + incorrectTotal).toString()
+            correctTextView.text = correctTotal.toString()
+            incorrectTextView.text = incorrectTotal.toString()
+            percentageTextView.text = (correctTotal / (correctTotal + incorrectTotal).toFloat() * 100).toInt().toString()
+
+            // Log entry to history
+            val entry = "Time & Date: $questionTime\nQuestion: $question\nYour answer of $userAnswer was ${if (correct) "correct." else "incorrect."}"
+            history.add(entry)
+        }
     }
 }

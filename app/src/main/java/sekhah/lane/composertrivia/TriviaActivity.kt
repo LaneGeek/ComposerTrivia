@@ -59,6 +59,7 @@ class TriviaActivity : AppCompatActivity() {
             answer2Button.isEnabled = false
             answer3Button.isEnabled = false
             answer4Button.isEnabled = false
+            finishButton.isEnabled = true
 
             // Is the answer correct?
             val userGotItRight = userAnswer == correctAnswer
@@ -95,11 +96,16 @@ class TriviaActivity : AppCompatActivity() {
             intent.putExtra("CorrectAnswer", correctAnswer)
             intent.putExtra("UserAnswer", userAnswer)
 
-            val sdf = SimpleDateFormat("h:mm:ss  M/d/yyyy")
-            val currentDate = sdf.format(Date())
-            intent.putExtra("QuestionTime", currentDate)
+            // Also send the time and date
+            val sdf = SimpleDateFormat("h:mm:ssa - EEE MMM d, yyyy")
+            val now = sdf.format(Date())
+            intent.putExtra("TimeDate", now)
             setResult(1, intent)
             finish()
         }
+    }
+
+    override fun onBackPressed() {
+        // Disable the back button to prevent cheating! The question has to be answered!
     }
 }
