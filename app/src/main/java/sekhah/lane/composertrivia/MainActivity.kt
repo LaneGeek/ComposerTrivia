@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -18,15 +17,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Get stored data
+        // Get stored data and update the scorecard
         sharedPrefs = getSharedPreferences("Trivia", 0)
         correctTotal = sharedPrefs!!.getInt("CorrectTotal", 0)
         incorrectTotal = sharedPrefs!!.getInt("IncorrectTotal", 0)
-        val a = sharedPrefs!!.getStringSet("History", setOf())
-        a?.forEach { x -> history.add(x) }
-
-        //textView5.text = a.toString()
-
+        val historySet = sharedPrefs!!.getStringSet("History", setOf())
+        historySet?.forEach { x -> history.add(x) }
         updateScorecard()
 
         // Go to TriviaActivity
@@ -35,10 +31,9 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, 1)
         }
 
-        //Go to StatisticsActivity
+        //Go to StatisticsActivity with history data
         viewStatisticsButton.setOnClickListener {
             val intent = Intent(this, StatisticsActivity::class.java)
-            // Send the history
             intent.putExtra("History", history)
             startActivity(intent)
         }
@@ -52,33 +47,22 @@ class MainActivity : AppCompatActivity() {
         val questionTime = data?.getStringExtra("TimeDate") ?: ""
         val correct = correctAnswer == userAnswer
 
-        // Check to see the question was asked and so the back button was not pressed
-        if (question != "") {
+        // Update the scores and scorecard
+        if (correct)
+            correctTotal++
+        else
+            incorrectTotal++
+        updateScorecard()
 
-            // Update the scores
-            if (correct)
-                correctTotal++
-            else
-                incorrectTotal++
+        // Log entry to history
+        history.add("Time & Date: $questionTime\nQuestion: $question\nYour answer of $userAnswer was ${if (correct) "correct." else "incorrect."}")
 
-            // Update the scorecard
-            updateScorecard()
-
-            // Log entry to history
-            history.add("Time & Date: $questionTime\nQuestion: $question\nYour answer of $userAnswer was ${if (correct) "correct." else "incorrect."}")
-
-            // Save data
-            val editor = sharedPrefs?.edit()
-            editor?.putInt("CorrectTotal", correctTotal)
-            editor?.putInt("IncorrectTotal", incorrectTotal)
-            // Shared preferences can only save a set not a list so we convert here
-            //val a: MutableSet<String?> = history.toMutableSet()
-            editor?.putStringSet("History", history.toMutableSet())
-            editor?.apply()
-
-
-
-        }
+        // Save data
+        val editor = sharedPrefs?.edit()
+        editor?.putInt("CorrectTotal", correctTotal)
+        editor?.putInt("IncorrectTotal", incorrectTotal)
+        editor?.putStringSet("History", history.toMutableSet())
+        editor?.apply()
     }
 
     private fun updateScorecard() {
@@ -87,5 +71,4 @@ class MainActivity : AppCompatActivity() {
         incorrectTextView.text = incorrectTotal.toString()
         percentageTextView.text = (correctTotal / (correctTotal + incorrectTotal).toFloat() * 100).toInt().toString()
     }
-
 }
