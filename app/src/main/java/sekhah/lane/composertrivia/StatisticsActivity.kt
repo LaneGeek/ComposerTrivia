@@ -11,10 +11,10 @@ class StatisticsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_statistics)
 
-        // We extract the data we need from MainActivity
-        val history = intent.getStringArrayExtra("History")
+        // Extract the data from MainActivity and reverse it so most recent at top
+        val history = intent.getStringArrayListExtra("History")?.reversed()
 
         // Render the list view
-        listView.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, history)
+        listView.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, history as MutableList<String>)
     }
 }

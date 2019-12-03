@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_trivia.*
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.random.Random
 
 class TriviaActivity : AppCompatActivity() {
@@ -60,7 +62,7 @@ class TriviaActivity : AppCompatActivity() {
 
             // Is the answer correct?
             val userGotItRight = userAnswer == correctAnswer
-            val message = if (userGotItRight) "Well done! You answered correctly!" else "Wrong! The actual year was $correctAnswer."
+            val message = if (userGotItRight) "Well done! Your answer of $userAnswer is correct!" else "Wrong! The actual year was $correctAnswer."
 
             // Display the message
             statusTextView.text = "${statusTextView.text}\n\n${message}"
@@ -87,11 +89,15 @@ class TriviaActivity : AppCompatActivity() {
         }
 
         finishButton.setOnClickListener {
-            // Gather data to return to the Main Activity and return to it
+            // Gather data to return to the MainActivity and return to it
             val intent = Intent()
             intent.putExtra("Question", question)
             intent.putExtra("CorrectAnswer", correctAnswer)
             intent.putExtra("UserAnswer", userAnswer)
+
+            val sdf = SimpleDateFormat("h:mm:ss  M/d/yyyy")
+            val currentDate = sdf.format(Date())
+            intent.putExtra("QuestionTime", currentDate)
             setResult(1, intent)
             finish()
         }
