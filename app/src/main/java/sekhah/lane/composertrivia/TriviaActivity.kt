@@ -9,7 +9,6 @@ import java.util.*
 import kotlin.random.Random
 
 class TriviaActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trivia)
@@ -106,6 +105,6 @@ class TriviaActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        // Disable the back button to prevent cheating! The question has to be answered!
+        // Disable the back button
     }
 }

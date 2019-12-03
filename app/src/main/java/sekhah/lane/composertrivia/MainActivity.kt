@@ -7,10 +7,9 @@ import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-
     private var correctTotal = 0
     private var incorrectTotal = 0
-    private val history = arrayListOf<String?>()
+    private var history = arrayListOf<String?>()
     private var sharedPrefs: SharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,11 +32,24 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, 1)
         }
 
-        //Go to StatisticsActivity with history data
-        viewStatisticsButton.setOnClickListener {
-            val intent = Intent(this, StatisticsActivity::class.java)
+        // Go to HistoryActivity with history data
+        viewHistoryButton.setOnClickListener {
+            val intent = Intent(this, HistoryActivity::class.java)
             intent.putExtra("History", history)
             startActivity(intent)
+        }
+
+        // Reset all history
+        deleteHistoryButton.setOnClickListener {
+            correctTotal = 0
+            incorrectTotal = 0
+            history = arrayListOf()
+            val editor = sharedPrefs?.edit()
+            editor?.putInt("CorrectTotal", correctTotal)
+            editor?.putInt("IncorrectTotal", incorrectTotal)
+            editor?.putStringSet("History", history.toMutableSet())
+            editor?.apply()
+            updateScorecard()
         }
     }
 
