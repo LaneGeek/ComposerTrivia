@@ -1,5 +1,6 @@
 package sekhah.lane.composertrivia
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_trivia.*
@@ -57,6 +58,7 @@ class TriviaActivity : AppCompatActivity() {
             answer3Button.isEnabled = false
             answer4Button.isEnabled = false
 
+            // Is the answer correct?
             val userGotItRight = userAnswer == correctAnswer
             val message = if (userGotItRight) "Well done! You answered correctly!" else "Wrong! The actual year was $correctAnswer."
 
@@ -84,6 +86,14 @@ class TriviaActivity : AppCompatActivity() {
             submitAnswer()
         }
 
-        finishButton.setOnClickListener { finish() }
+        finishButton.setOnClickListener {
+            // Gather data to return to the Main Activity and return to it
+            val intent = Intent()
+            intent.putExtra("Question", question)
+            intent.putExtra("CorrectAnswer", correctAnswer)
+            intent.putExtra("UserAnswer", userAnswer)
+            setResult(1, intent)
+            finish()
+        }
     }
 }
