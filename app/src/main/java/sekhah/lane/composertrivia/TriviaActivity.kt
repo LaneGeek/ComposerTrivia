@@ -17,17 +17,22 @@ class TriviaActivity : AppCompatActivity() {
         setContentView(R.layout.activity_trivia)
 
         // Database consists of parallel arrays
-        val composers = arrayOf("Beethoven", "Mozart", "Tchaikovsky", "Mahler", "Bach",
-            "Vivaldi", "Handel", "Haydn", "Rossini", "Schubert",
-            "Berlioz", "Liszt", "Wagner", "Verdi", "Bruckner",
-            "Brahms", "Dvorak", "Puccini", "Debussy", "Ravel",
-            "Sibelius", "Schoenberg", "Messiaen", "Prokofiev", "Rachmaninoff", "Stravinsky")
-        val birthYears = arrayOf(1770, 1756, 1840, 1860, 1685, 1678, 1685, 1732, 1792, 1797,
+        val composers = arrayOf(
+            "Beethoven", "Mozart", "Tchaikovsky", "Mahler", "Bach", "Vivaldi",
+            "Handel", "Haydn", "Rossini", "Schubert", "Berlioz", "Liszt", "Wagner", "Verdi",
+            "Bruckner", "Brahms", "Dvorak", "Puccini", "Debussy", "Ravel", "Sibelius",
+            "Schoenberg", "Messiaen", "Prokofiev", "Rachmaninoff", "Stravinsky"
+        )
+        val birthYears = arrayOf(
+            1770, 1756, 1840, 1860, 1685, 1678, 1685, 1732, 1792, 1797,
             1803, 1811, 1813, 1813, 1824, 1833, 1841, 1858, 1862, 1875,
-            1865, 1874, 1908, 1891, 1873, 1882)
-        val deathYears = arrayOf(1827, 1791, 1893, 1911, 1750, 1741, 1759, 1809, 1868, 1828,
+            1865, 1874, 1908, 1891, 1873, 1882
+        )
+        val deathYears = arrayOf(
+            1827, 1791, 1893, 1911, 1750, 1741, 1759, 1809, 1868, 1828,
             1869, 1886, 1883, 1901, 1896, 1897, 1904, 1924, 1918, 1937,
-            1957, 1951, 1992, 1953, 1943, 1971)
+            1957, 1951, 1992, 1953, 1943, 1971
+        )
 
         // Random pick of a composer
         val random = Random.nextInt(0, composers.size)
@@ -151,6 +156,6 @@ class TriviaActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        // Disable the back button
+        // Disable the back button by doing nothing
     }
 }

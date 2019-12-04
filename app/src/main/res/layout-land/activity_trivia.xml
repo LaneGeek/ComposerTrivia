@@ -78,7 +78,7 @@
         android:layout_marginTop="16dp"
         android:text="Think carefully and press one of the four buttons above."
         android:textAlignment="center"
-        android:textSize="18sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -91,6 +91,7 @@
         android:layout_marginBottom="32dp"
         android:enabled="false"
         android:text="Return To Scorecard"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2" />

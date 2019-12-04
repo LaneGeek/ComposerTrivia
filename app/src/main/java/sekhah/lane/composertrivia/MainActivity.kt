@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         // Reset all history
         deleteHistoryButton.setOnClickListener {
             val builder = AlertDialog.Builder(this)
-            builder.setTitle("Delete History")
+            builder.setTitle("HISTORY WILL BE ERASED!")
             builder.setMessage("Are you sure you want to do this?")
             builder.setPositiveButton("Yes") { _, _ ->
                 correctTotal = 0
