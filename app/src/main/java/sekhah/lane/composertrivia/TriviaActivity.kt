@@ -9,6 +9,9 @@ import java.util.*
 import kotlin.random.Random
 
 class TriviaActivity : AppCompatActivity() {
+    private var userAnswer = 0
+    private var correctAnswer = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_trivia)
@@ -30,7 +33,7 @@ class TriviaActivity : AppCompatActivity() {
         questionTextView.text = question
 
         // This is the correct answer
-        val correctAnswer = if (questionAboutBirth) birthYears[random] else deathYears[random]
+        correctAnswer = if (questionAboutBirth) birthYears[random] else deathYears[random]
 
         // Generate buttons: 3 random years mixed with 1 real year
         // We choose a set instead of array or list because we want unique years
@@ -48,9 +51,6 @@ class TriviaActivity : AppCompatActivity() {
         answer2Button.text = shuffledAnswers.elementAt(1).toString()
         answer3Button.text = shuffledAnswers.elementAt(2).toString()
         answer4Button.text = shuffledAnswers.elementAt(3).toString()
-
-        // Variable for the user's answer
-        var userAnswer = 0
 
         // Function to get the answer if any button is pressed
         fun submitAnswer() {
@@ -102,6 +102,44 @@ class TriviaActivity : AppCompatActivity() {
             setResult(1, intent)
             finish()
         }
+    }
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        // Save the current game state
+        savedInstanceState.putString("Question", questionTextView.text.toString())
+        savedInstanceState.putString("Answer1", answer1Button.text.toString())
+        savedInstanceState.putString("Answer2", answer2Button.text.toString())
+        savedInstanceState.putString("Answer3", answer3Button.text.toString())
+        savedInstanceState.putString("Answer4", answer4Button.text.toString())
+        savedInstanceState.putString("Status", statusTextView.text.toString())
+        savedInstanceState.putBoolean("Button1IsEnabled", answer1Button.isEnabled)
+        savedInstanceState.putBoolean("Button2IsEnabled", answer2Button.isEnabled)
+        savedInstanceState.putBoolean("Button3IsEnabled", answer3Button.isEnabled)
+        savedInstanceState.putBoolean("Button4IsEnabled", answer4Button.isEnabled)
+        savedInstanceState.putBoolean("FinishButtonIsEnabled", finishButton.isEnabled)
+        savedInstanceState.putInt("UserAnswer", userAnswer)
+        savedInstanceState.putInt("CorrectAnswer", correctAnswer)
+
+        super.onSaveInstanceState(savedInstanceState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        // Restore the game state
+        super.onRestoreInstanceState(savedInstanceState)
+
+        questionTextView.text = savedInstanceState.getString("Question")
+        answer1Button.text = savedInstanceState.getString("Answer1")
+        answer2Button.text = savedInstanceState.getString("Answer2")
+        answer3Button.text = savedInstanceState.getString("Answer3")
+        answer4Button.text = savedInstanceState.getString("Answer4")
+        statusTextView.text = savedInstanceState.getString("Status")
+        answer1Button.isEnabled = savedInstanceState.getBoolean("Button1IsEnabled")
+        answer2Button.isEnabled = savedInstanceState.getBoolean("Button2IsEnabled")
+        answer3Button.isEnabled = savedInstanceState.getBoolean("Button3IsEnabled")
+        answer4Button.isEnabled = savedInstanceState.getBoolean("Button4IsEnabled")
+        finishButton.isEnabled = savedInstanceState.getBoolean("FinishButtonIsEnabled")
+        userAnswer = savedInstanceState.getInt("UserAnswer")
+        correctAnswer = savedInstanceState.getInt("CorrectAnswer")
     }
 
     override fun onBackPressed() {

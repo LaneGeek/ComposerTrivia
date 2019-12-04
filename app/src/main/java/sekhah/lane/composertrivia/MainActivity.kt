@@ -22,8 +22,7 @@ class MainActivity : AppCompatActivity() {
         correctTotal = sharedPrefs!!.getInt("CorrectTotal", 0)
         incorrectTotal = sharedPrefs!!.getInt("IncorrectTotal", 0)
         val historySet = sharedPrefs!!.getStringSet("History", setOf())
-        // Shared preferences can only store a set, not a list so we have to
-        // convert back-and-forth
+        // Shared preferences can only store a set, not a list so we have to convert back-and-forth
         historySet?.forEach { x -> history.add(x) }
         updateScorecard()
 
