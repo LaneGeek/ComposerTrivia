@@ -10,9 +10,11 @@ class HistoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
 
-        // Extract the data from MainActivity, sort and reverse it so most recent is at top
-        //val history = intent.getStringArrayListExtra("History")?.reversed()
-        val history = intent.getStringArrayListExtra("History")?.sorted()?.reversed()
+        // Extract the data from MainActivity, sort by serial number and reverse it so most recent is at top
+        var history = intent.getStringArrayListExtra("History")?.sorted()?.reversed()
+
+        // Remove serial numbers (first 8 characters) for viewing
+        history = history?.map { x -> x.drop(8) }
 
         // Render the list view
         if (history?.size != 0)

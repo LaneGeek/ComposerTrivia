@@ -75,8 +75,11 @@ class MainActivity : AppCompatActivity() {
             incorrectTotal++
         updateScorecard()
 
+        // Generate serial number of entry
+        val sn = (correctTotal + incorrectTotal).toString().padStart(8, '0')
+
         // Log entry to history
-        history.add("Time & Date: $questionTime\nQuestion: $question\nYour answer of $userAnswer was ${if (correct) "correct." else "incorrect."}")
+        history.add("${sn}Time & Date: $questionTime\nQuestion: $question\nYour answer of $userAnswer was ${if (correct) "correct." else "incorrect."}")
 
         // Save data
         val editor = sharedPrefs?.edit()
